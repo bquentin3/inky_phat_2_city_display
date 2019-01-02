@@ -1,4 +1,4 @@
-
+#use PYOWM and Pimoroni Inky pHAT to display weather in 2 cities at once
 
 from inky import InkyPHAT
 from PIL import Image, ImageFont, ImageDraw
@@ -10,7 +10,7 @@ from pyowm import OWM
 while True:
     API_key = "Your_OWM_key_here"
     owm = OWM(API_key)
-    obs = owm.weather_at_place("Houston,US")
+    obs = owm.weather_at_place("Houston,US") 
     obs2 = owm.weather_at_place("Honolulu,US")
     w = obs.get_weather()
     w2 = obs2.get_weather()
