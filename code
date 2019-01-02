@@ -1,0 +1,48 @@
+
+
+from inky import InkyPHAT
+from PIL import Image, ImageFont, ImageDraw
+from font_fredoka_one import FredokaOne
+from time import sleep
+from pyowm import OWM
+
+
+while True:
+    API_key = "Your_OWM_key_here"
+    owm = OWM(API_key)
+    obs = owm.weather_at_place("Houston,US")
+    obs2 = owm.weather_at_place("Honolulu,US")
+    w = obs.get_weather()
+    w2 = obs2.get_weather()
+    
+    inky_display = InkyPHAT("red")
+    inky_display.set_border(inky_display.WHITE)
+    
+    img = Image.new("P", (inky_display.WIDTH, inky_display.HEIGHT))
+    draw = ImageDraw.Draw(img)
+    
+    font = ImageFont.truetype(FredokaOne, 22)
+    temp = (str(w.get_temperature('fahrenheit')['temp']))
+    temp2 = (str(w2.get_temperature('fahrenheit')['temp']))
+    city = "Houston, TX"
+    city2 = "Honolulu, HI"
+    current = w.get_detailed_status()
+    current2 = w2.get_detailed_status()
+    
+    draw.text((0,0), city, inky_display.BLACK, font)
+    draw.text((150,0), temp, inky_display.BLACK, font)
+    draw.text((25, 25), current, inky_display.BLACK, font)
+    draw.text((0, 50), city2, inky_display.RED, font)
+    draw.text((150, 50), temp2, inky_display.RED, font)
+    draw.text((25, 75), current2, inky_display.RED, font)
+    
+    inky_display.set_image(img)
+    inky_display.show()
+    
+    print(city)
+    print(temp)
+    print(current)
+    print(city2)
+    print(temp2)
+    print(current2)
+    sleep(900)
